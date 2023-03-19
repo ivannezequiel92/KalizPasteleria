@@ -19,3 +19,8 @@ class Alfajores(models.Model):
     nombre = models.CharField(max_length=30)
     tipo = models.CharField(max_length=30)
     sabor = models.CharField(max_length=30)
+
+class Alfajor(models.Model):
+    nombre = models.CharField(max_length=30)
+    tipo = models.CharField(max_length=30)
+    sabor = models.CharField(max_length=30)

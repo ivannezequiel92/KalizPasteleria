@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block contenido_cambia %}
+        <h1>Es otro contenido</h1>
+    {% if alfajores %}
+        {% for alfajor in alfajores %}
+            <p>alfajor: {{ alfajor.nombre }}</p>
+            <p>tipo: {{ alfajor.tipo }}</p>
+            <p>sabor: {{ alfajor.sabor }}</p>
+        {% endfor %}
+    {% else %}
+        <h1>No existen alfajores</h1>
+    {% endif %}
+{%  endblock %}
