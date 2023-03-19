@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from AppKaliz.views import guardar_tortas
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('postres/<peso>', guardar_tortas)
 ]
