@@ -20,7 +20,12 @@ class Alfajores(models.Model):
     tipo = models.CharField(max_length=30)
     sabor = models.CharField(max_length=30)
 
+    def __str__(self):
+        return f"Alfajor: {self.nombre}, Tipo: {self.tipo}, Sabor: {self.sabor}"
 class Alfajor(models.Model):
     nombre = models.CharField(max_length=30)
     tipo = models.CharField(max_length=30)
     sabor = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f"Alfajor: {self.nombre}, Tipo: {self.tipo}, Sabor: {self.sabor}"

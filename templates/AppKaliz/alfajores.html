@@ -1,12 +1,24 @@
 {% extends "base.html" %}
 
 {% block contenido_cambia %}
-        <h1>Es otro contenido</h1>
+    <form action="{%  url 'AppKalizAlfajores'  %}" method="post">
+    {%  csrf_token %}
+    {{  form.as_p }}
+    <input type="submit" value="Crea tu alfajor!">
+
+    </form>
+    <br><hr>
+    <form action="{% url 'AppKalizBuscarAlfajor' %}">
+    {{ form_busqueda.as_p }}
+    <input type="submit" value="Busca tu alfajor">
+
+    </form>
+        <p>Los alfajores que tenemos son:</p><br>
     {% if alfajores %}
         {% for alfajor in alfajores %}
             <p>alfajor: {{ alfajor.nombre }}</p>
             <p>tipo: {{ alfajor.tipo }}</p>
-            <p>sabor: {{ alfajor.sabor }}</p>
+            <p>sabor: {{ alfajor.sabor }}</p><br>
         {% endfor %}
     {% else %}
         <h1>No existen alfajores</h1>
