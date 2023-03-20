@@ -29,3 +29,10 @@ class Alfajor(models.Model):
 
     def __str__(self):
         return f"Alfajor: {self.nombre}, Tipo: {self.tipo}, Sabor: {self.sabor}"
+
+class Torta(models.Model):
+    nombre = models.CharField(max_length=30)
+    peso = models.FloatField()
+
+    def __str__(self):
+        return f"Torta: {self.nombre}, Peso: {self.peso}"
