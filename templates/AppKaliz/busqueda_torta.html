@@ -2,7 +2,9 @@
 {% block contenido_cambia %}
     {%  if Tortas %}
         {% for torta in Tortas %}
-            <p>torta: {{ torta.nombre }}</p>
+            <p>Torta: {{ torta.nombre }}</p>
+             <p>Peso: {{ torta.peso }}</p>
+
 
         {% endfor %}
     {% else %}

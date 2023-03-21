@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from AppKaliz.models import  Alfajor, Torta
-from AppKaliz.forms import AlfajoresForm, BusquedaAlfajorForm, BusquedaTortaForm, TortasForm
+from AppKaliz.models import  Alfajor, Torta, Sandwiche
+from AppKaliz.forms import AlfajoresForm, BusquedaAlfajorForm, BusquedaTortaForm, TortasForm, SandwichesForm
 
 from django.http import HttpResponse
 
@@ -100,3 +100,34 @@ def busqueda_torta(request):
             "Tortas": tortas_filtrados
         }
     return render(request, "AppKaliz/busqueda_torta.html", context=context)
+
+def sandwiches(request):
+
+    if request.method == "POST":
+        mi_formulario = SandwichesForm(request.POST)
+
+        if mi_formulario.is_valid():
+            informacion = mi_formulario.cleaned_data
+            sandwiche_save = Sandwiche(
+                tipo=informacion['tipo'],
+                sabor=informacion['sabor'],
+            )
+            sandwiche_save.save()
+
+    all_sandwiche = Sandwiche.objects.all()
+    context = {
+        "sandwiches": all_sandwiche,
+        "form": SandwichesForm(),
+
+    }
+    return render(request, "AppKaliz/sandwiches.html", context=context)
+
+def crear_sandwiche(request, tipo, sabor):
+    save_sandwiche = Sandwiche(tipo=tipo, sabor=sabor)
+    save_sandwiche.save()
+    context = {
+        "tipo": tipo,
+
+    }
+    return render(request, "AppKaliz/guardar_sandwiche.html", context)
+

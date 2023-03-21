@@ -10,10 +10,7 @@ class Tortas(models.Model):
     def __str__(self):
         return f"Torta: {self.nombre}, y su peso es: {self.peso}"
 
-class Clientes(models.Model):
-    nombre = models.CharField(max_length=30)
-    apellido = models.CharField(max_length=30)
-    email = models.EmailField
+
 
 class Alfajores(models.Model):
     nombre = models.CharField(max_length=30)
@@ -36,3 +33,10 @@ class Torta(models.Model):
 
     def __str__(self):
         return f"Torta: {self.nombre}, Peso: {self.peso}"
+
+class Sandwiche(models.Model):
+    tipo = models.CharField(max_length=30)
+    sabor = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f"Sandwiche: {self.tipo}, Sabor: {self.sabor}"

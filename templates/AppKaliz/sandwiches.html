@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block contenido_cambia %}
+    <form action="{%  url 'AppKalizSandwiches'  %}" method="post">
+    {%  csrf_token %}
+    {{  form.as_p }}
+    <input type="submit" value="Crea tu sandwich!">
+
+    </form>
+    <br><hr>
+
+        <p>Los sandwiches que tenemos son:</p><br>
+    {% if sandwiches %}
+        {% for sandwiche in sandwiches %}
+            <p>Tipo: {{ sandwiche.tipo }}</p>
+            <p>Sabor: {{ sandwiche.sabor }}</p><br>
+        {% endfor %}
+    {% else %}
+        <h1>No existen sandwiches</h1>
+    {% endif %}
+{%  endblock %}

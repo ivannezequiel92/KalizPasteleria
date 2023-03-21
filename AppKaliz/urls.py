@@ -1,6 +1,6 @@
 
 from django.urls import path
-from AppKaliz.views import inicio, clientes, alfajores, crear_alfajor, tortas, busqueda_alfajor, busqueda_torta, crear_torta
+from AppKaliz.views import inicio, clientes, alfajores, crear_alfajor, tortas, busqueda_alfajor, busqueda_torta, crear_torta, crear_sandwiche, sandwiches
 
 urlpatterns = [
 
@@ -12,4 +12,6 @@ urlpatterns = [
     path('tortas/', tortas, name="AppKalizTortas"),
     path('buscarTortas/', busqueda_torta, name="AppKalizBuscarTortas"),
     path('torta/<nombre>/<peso>', crear_torta, name="AppKalizCrearTorta"),
+    path('sandwiche/<tipo>/<sabor>', crear_sandwiche, name="AppKalizCrearSandwiche"),
+    path('sandwiche/', sandwiches, name="AppKalizSandwiches"),
 ]

@@ -21,4 +21,11 @@ class BusquedaTortaForm(forms.Form):
     nombre = forms.CharField(min_length=3, max_length=40)
 
 
+class SandwichesForm(forms.Form):
+
+    tipo = forms.CharField(min_length=3, max_length=40)
+    sabor = forms.CharField(min_length=3, max_length=40)
+
+
+
 
