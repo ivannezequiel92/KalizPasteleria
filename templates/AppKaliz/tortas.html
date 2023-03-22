@@ -1,23 +1,22 @@
 {% extends "base.html" %}
 
 {% block contenido_cambia %}
-    <form action="{%  url 'AppKalizTortas'  %}" method="post">
+    <form class="text-black-50 mb-5" action="{%  url 'AppKalizTortas'  %}" method="post">
     {%  csrf_token %}
     {{  form.as_p }}
     <input type="submit" value="Crea tu torta!">
 
     </form>
     <br><hr>
-    <form action="{% url 'AppKalizBuscarTortas' %}">
+    <form class="text-black-50 mb-5" action="{% url 'AppKalizBuscarTortas' %}">
     {{ form_busqueda.as_p }}
     <input type="submit" value="Busca tu torta">
 
     </form>
-        <p>Las tortas que tenemos son:</p><br>
+        <p class="text-black-50 mb-5">Las tortas que tenemos son:</p><br>
     {% if tortas %}
         {% for torta in tortas%}
-            <p>torta: {{ torta.nombre }}</p>
-            <p>peso: {{ torta.peso }}</p><br>
+            <p class="text-black-50 mb-5">torta: {{ torta.nombre }}, peso: {{ torta.peso }}</p><br>
         {% endfor %}
     {% else %}
         <h1>No existen tortas</h1>
