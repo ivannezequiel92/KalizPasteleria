@@ -31,10 +31,29 @@
                         <a class="nav-link" href="{% url 'AppKalizSandwiches' %}">Sandwiches</a>
                         <a class="nav-link" href="#portfolio">About</a>
                         <a class="nav-link" href="#contact">Contacto</a>
-                    </ul>
+
+                        {% if user.is_authenticated %}
+                             <a class="nav-link">{{ user.username }}</a>
+
+                             <a class="nav-link" href="{% url 'accountLogout' %}">Cerrar sesion</a>
+
+                        {% else %}
+
+                             <a class="nav-link" href="{% url 'accountLogin' %}">Iniciar sesion</a>
+                             <a class="nav-link" href="{% url 'accountRegister' %}">Registrar</a>
+                        {% endif %}
+
+                        </ul>
                 </div>
             </div>
         </nav>
+        {# mensajes #}
+        {% for mensaje in mensajes %}
+            <p>{{ mensaje }}</p>
+        {% endfor %}
+
+
+        {# body #}
         {% block contenido_cambia %}
 
         {%  endblock %}

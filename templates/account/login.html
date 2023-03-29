@@ -2,9 +2,10 @@
 
 {% block contenido_cambia %}
 
-    <form action="{%  url "accountlogin" %}" method="POST">
+    <form  method="POST">
         {%  csrf_token %}
         {{  form.as_p }}
+        <input type="submit" value="Enviar">
     </form>
 
 {% endblock %}

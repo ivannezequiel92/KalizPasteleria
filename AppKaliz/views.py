@@ -1,5 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from AppKaliz.models import  Alfajor, Torta, Sandwiche
+from AppKaliz.models import Alfajor, Torta, Sandwiche
 from AppKaliz.forms import AlfajoresForm, BusquedaAlfajorForm, BusquedaTortaForm, TortasForm, SandwichesForm
 
 from django.http import HttpResponse
@@ -16,7 +17,6 @@ def clientes(request):
 
 
 def alfajores(request):
-
     if request.method == "POST":
         mi_formulario = AlfajoresForm(request.POST)
 
@@ -37,6 +37,8 @@ def alfajores(request):
     }
     return render(request, "AppKaliz/alfajores.html", context=context)
 
+
+@login_required
 def crear_alfajor(request, nombre, tipo, sabor):
     save_alfajor = Alfajor(nombre=nombre, tipo=tipo, sabor=sabor)
     save_alfajor.save()
@@ -48,7 +50,7 @@ def crear_alfajor(request, nombre, tipo, sabor):
 
 
 def busqueda_alfajor(request):
-    #mostrar datos filtrados
+    # mostrar datos filtrados
     mi_formulario = BusquedaAlfajorForm(request.GET)
     if mi_formulario.is_valid():
         informacion = mi_formulario.cleaned_data
@@ -60,7 +62,6 @@ def busqueda_alfajor(request):
 
 
 def tortas(request):
-
     if request.method == "POST":
         mi_formulario = TortasForm(request.POST)
 
@@ -80,6 +81,7 @@ def tortas(request):
     }
     return render(request, "AppKaliz/tortas.html", context=context)
 
+
 def crear_torta(request, nombre, peso):
     save_torta = Torta(nombre=nombre, peso=peso)
     save_torta.save()
@@ -91,7 +93,7 @@ def crear_torta(request, nombre, peso):
 
 
 def busqueda_torta(request):
-    #mostrar datos filtrados
+    # mostrar datos filtrados
     mi_formulario = BusquedaTortaForm(request.GET)
     if mi_formulario.is_valid():
         informacion = mi_formulario.cleaned_data
@@ -101,8 +103,8 @@ def busqueda_torta(request):
         }
     return render(request, "AppKaliz/busqueda_torta.html", context=context)
 
-def sandwiches(request):
 
+def sandwiches(request):
     if request.method == "POST":
         mi_formulario = SandwichesForm(request.POST)
 
@@ -122,6 +124,7 @@ def sandwiches(request):
     }
     return render(request, "AppKaliz/sandwiches.html", context=context)
 
+
 def crear_sandwiche(request, tipo, sabor):
     save_sandwiche = Sandwiche(tipo=tipo, sabor=sabor)
     save_sandwiche.save()
@@ -130,4 +133,3 @@ def crear_sandwiche(request, tipo, sabor):
 
     }
     return render(request, "AppKaliz/guardar_sandwiche.html", context)
-
