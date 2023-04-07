@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block contenido_cambia %}
+
+    <form class="text-black-50 mb-5" action="{%  url 'AppKalizRecetas'  %}" method="post" enctype="multipart/form-data">
+
+    {%  csrf_token %}
+    {{  form.as_p }}
+    <input type="submit" value="Subi tu receta!">
+
+    </form>
+    <br><hr>
+    <form class="text-black-50 mb-5" action="{% url 'AppKalizBuscarReceta' %}">
+    {{ form_busqueda.as_p }}
+    <input type="submit" value="Busca tu receta favorita">
+
+    </form>
+
+        <p class="text-black-50 mb-5">Las recetas que tenemos son:</p><br>
+    {% if recetas %}
+        {% for receta in recetas %}
+
+                 <a class="text-black-50 mb-5" href="{% url 'AppKalizRecetaDetalle' receta.id %}">Receta: {{ receta.Receta }}, Descripcion: {{ receta.Descripcion}}, Duracion: {{receta.Duracion }}<br></a>
+         <br>
+
+        {% endfor %}
+    {% else %}
+        <h1>No existen recetas</h1>
+    {% endif %}
+{%  endblock %}

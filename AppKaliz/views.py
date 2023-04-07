@@ -1,135 +1,187 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-from AppKaliz.models import Alfajor, Torta, Sandwiche
-from AppKaliz.forms import AlfajoresForm, BusquedaAlfajorForm, BusquedaTortaForm, TortasForm, SandwichesForm
+from AppKaliz.models import Recetas, RecetasDulces, Comentario
+from AppKaliz.forms import Comentarios, RecetasForm, BusquedaRecetasForm,  SandwichesForm, RecetasDulcesForm, RecetasDulces, BusquedaRecetasDulcesForm
+from django.views.generic import DetailView
+
 
 from django.http import HttpResponse
 
 
 # Create your views here.
 
+
 def inicio(request):
     return render(request, "base.html")
 
 
-def clientes(request):
-    pass
+def recetas(request):
 
-
-def alfajores(request):
     if request.method == "POST":
-        mi_formulario = AlfajoresForm(request.POST)
+        mi_formulario = RecetasForm(request.POST, request.FILES)
 
         if mi_formulario.is_valid():
             informacion = mi_formulario.cleaned_data
-            alfajor_save = Alfajor(
-                nombre=informacion['nombre'],
-                tipo=informacion['tipo'],
-                sabor=informacion['sabor'],
-            )
-            alfajor_save.save()
 
-    all_alfajores = Alfajor.objects.all()
+            receta_save = Recetas(
+
+                Receta=informacion['Receta'],
+                Descripcion=informacion['Descripcion'],
+                Duracion=informacion['Duracion'],
+                usuario=informacion['usuario'],
+                Pasos=informacion['Pasos'],
+                Imagen=informacion['Imagen'],
+                Ingredientes=informacion['Ingredientes'],
+
+                            )
+            receta_save.save()
+
+    all_recetas = Recetas.objects.all()
     context = {
-        "alfajores": all_alfajores,
-        "form": AlfajoresForm(),
-        "form_busqueda": BusquedaAlfajorForm()
+        "recetas": all_recetas,
+        "form": RecetasForm(),
+        "form_busqueda": BusquedaRecetasForm()
     }
-    return render(request, "AppKaliz/alfajores.html", context=context)
+    return render(request, "AppKaliz/recetas.html", context=context)
+
+@login_required(login_url='accountRegister')
+class CrearReceta(LoginRequiredMixin):
+    @login_required(login_url='accountRegister')
+    def crear_receta(request, fechaPublicacion, Duracion, usuario, Receta, Pasos,
+                     Descripcion, Imagen, Ingredientes):
+
+        save_receta = Recetas(fechaPublicacion=fechaPublicacion, Duracion=Duracion, usuario=usuario,
+                              Receta=Receta, Descripcion=Descripcion, Pasos=Pasos,
+                              Imagen=Imagen, Ingredientes=Ingredientes )
+        save_receta.save()
+        context = {
+            "Receta": Receta,
+
+        }
+        return render(request, HttpResponse, "AppKaliz/guardar_receta.html", context)
 
 
-@login_required
-def crear_alfajor(request, nombre, tipo, sabor):
-    save_alfajor = Alfajor(nombre=nombre, tipo=tipo, sabor=sabor)
-    save_alfajor.save()
-    context = {
-        "nombre": nombre,
 
-    }
-    return render(request, "AppKaliz/guardar_alfajor.html", context)
+def recetasDetalle(request, id):
 
+   all_recetas = Recetas.objects.get(id=id)
+   context = {
+       "recetas": all_recetas,
+   }
+   return render(request, "AppKaliz/recetasDetalle.html", context=context)
 
-def busqueda_alfajor(request):
+@login_required(login_url='accountRegister')
+def busqueda_receta(request):
     # mostrar datos filtrados
-    mi_formulario = BusquedaAlfajorForm(request.GET)
+    mi_formulario = BusquedaRecetasForm(request.GET)
     if mi_formulario.is_valid():
         informacion = mi_formulario.cleaned_data
-        alfajores_filtrados = Alfajor.objects.filter(sabor__icontains=informacion['sabor'])
+        recetas_filtradas = Recetas.objects.filter(Receta__icontains=informacion['Receta'])
         context = {
-            "Alfajores": alfajores_filtrados
+            "recetas": recetas_filtradas
         }
-    return render(request, "AppKaliz/busqueda_alfajor.html", context=context)
+    return render(request, "AppKaliz/busqueda_receta.html", context=context)
 
 
-def tortas(request):
+
+def recetasDulces(request):
+
     if request.method == "POST":
-        mi_formulario = TortasForm(request.POST)
+        mi_formulario = RecetasDulcesForm(request.POST, request.FILES)
 
         if mi_formulario.is_valid():
             informacion = mi_formulario.cleaned_data
-            torta_save = Torta(
-                nombre=informacion['nombre'],
-                peso=informacion['peso'],
-            )
-            torta_save.save()
 
-    all_torta = Torta.objects.all()
+            receta_save = RecetasDulces(
+
+                Receta=informacion['Receta'],
+                Descripcion=informacion['Descripcion'],
+                Duracion=informacion['Duracion'],
+                usuario=informacion['usuario'],
+                Pasos=informacion['Pasos'],
+                Imagen=informacion['Imagen'],
+                Ingredientes=informacion['Ingredientes'],
+
+                            )
+            receta_save.save()
+
+    all_recetas = RecetasDulces.objects.all()
     context = {
-        "tortas": all_torta,
-        "form": TortasForm(),
-        "form_busqueda": BusquedaTortaForm()
+        "recetas": all_recetas,
+        "form": RecetasDulcesForm(),
+        "form_busqueda": BusquedaRecetasDulcesForm()
     }
-    return render(request, "AppKaliz/tortas.html", context=context)
+    return render(request, "AppKaliz/receta_dulce.html", context=context)
+
+@login_required(login_url='accountRegister')
+class CrearRecetaDulce(LoginRequiredMixin):
+    @login_required(login_url='accountRegister')
+    def crear_recetaDulce(request, fechaPublicacion, Duracion, usuario, Receta, Pasos,
+                     Descripcion, Imagen, Ingredientes):
+
+        save_receta = RecetasDulces(fechaPublicacion=fechaPublicacion, Duracion=Duracion, usuario=usuario,
+                              Receta=Receta, Descripcion=Descripcion, Pasos=Pasos,
+                              Imagen=Imagen, Ingredientes=Ingredientes )
+        save_receta.save()
+        context = {
+            "Receta": RecetasDulces,
+
+        }
+        return render(request, HttpResponse, "AppKaliz/guardar_recetaDulce.html", context)
 
 
-def crear_torta(request, nombre, peso):
-    save_torta = Torta(nombre=nombre, peso=peso)
-    save_torta.save()
-    context = {
-        "nombre": nombre,
+def recetasDulceDetalle(request, id):
 
-    }
-    return render(request, "AppKaliz/guardar_torta.html", context)
+   all_recetas = RecetasDulces.objects.get(id=id)
+   context = {
+       "recetas": all_recetas,
+   }
+   return render(request, "AppKaliz/recetasDulceDetalle.html", context=context)
 
-
-def busqueda_torta(request):
+@login_required(login_url='accountRegister')
+def busqueda_recetaDulce(request):
     # mostrar datos filtrados
-    mi_formulario = BusquedaTortaForm(request.GET)
+    mi_formulario = BusquedaRecetasDulcesForm(request.GET)
     if mi_formulario.is_valid():
         informacion = mi_formulario.cleaned_data
-        tortas_filtrados = Torta.objects.filter(nombre__icontains=informacion['nombre'])
+        recetas_filtradas = RecetasDulces.objects.filter(Receta__icontains=informacion['Receta'])
         context = {
-            "Tortas": tortas_filtrados
+            "recetas": recetas_filtradas
         }
-    return render(request, "AppKaliz/busqueda_torta.html", context=context)
+    return render(request,"AppKaliz/busqueda_recetaDulce.html", context=context)
 
 
-def sandwiches(request):
+
+def comentarios(request):
     if request.method == "POST":
-        mi_formulario = SandwichesForm(request.POST)
+        miFormulario = Comentarios(request.POST)
 
-        if mi_formulario.is_valid():
-            informacion = mi_formulario.cleaned_data
-            sandwiche_save = Sandwiche(
-                tipo=informacion['tipo'],
-                sabor=informacion['sabor'],
-            )
-            sandwiche_save.save()
+        if miFormulario.is_valid():
+            informacion = miFormulario.cleaned_data
 
-    all_sandwiche = Sandwiche.objects.all()
+            comentario_save = Comentario(usuario=informacion["usuario"], comentario=informacion["comentario"], fechaPublicacion=informacion["fechaPublicacion"])
+
+            comentario_save.save()
+
+    all_comentarios = Comentario.objects.all()
     context = {
-        "sandwiches": all_sandwiche,
-        "form": SandwichesForm(),
+            "Comentarios": all_comentarios,
+            "form": Comentarios()
+        }
 
-    }
-    return render(request, "AppKaliz/sandwiches.html", context=context)
+    return render(request, "AppKaliz/comentarios.html", context=context)
 
+class CrearComentario(LoginRequiredMixin):
 
-def crear_sandwiche(request, tipo, sabor):
-    save_sandwiche = Sandwiche(tipo=tipo, sabor=sabor)
-    save_sandwiche.save()
-    context = {
-        "tipo": tipo,
+    def crear_comentario(request, fechaPublicacion, usuario, comentario):
 
-    }
-    return render(request, "AppKaliz/guardar_sandwiche.html", context)
+            save_comentario = Comentario(fechaPublicacion=fechaPublicacion, comentario=comentario, usuario=usuario)
+            save_comentario.save()
+            context = {
+                "Comentario": comentario,
+                "Usuario": usuario,
+                "FechaPublicacion": fechaPublicacion,
+
+            }
+            return render(request, HttpResponse, "AppKaliz/recetasDetalle.html", context)

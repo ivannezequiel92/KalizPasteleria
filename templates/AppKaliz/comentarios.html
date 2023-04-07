@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block contenido_cambia %}
+
+    <form class="text-black-50 mb -5" action="{%  url 'Comentarios' %}" method="post" >
+
+    {% csrf_token  %}
+    {{ form.as_p }}
+
+
+    <input type="submit" value="Comentar">
+
+    </form>
+
+        <p class="text-black-50 mb-5">Comentarios:</p><br>
+    {% if Comentarios %}
+        {% for comentario in Comentarios %}
+
+                 <a class="text-black-50 mb-5">Fecha de publicacion: {{comentario.fechaPublicacion}}<br>Usuario: {{ comentario.Usuario }}<br> Comentario: {{ comentario.comentario}}<br></a>
+         <br>
+
+        {% endfor %}
+    {% else %}
+        <h1>Aun no hay comentarios</h1>
+    {% endif %}
+
+
+
+{% endblock %}

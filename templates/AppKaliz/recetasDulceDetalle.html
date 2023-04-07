@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block contenido_cambia %}
+
+<br>
+<br>
+
+<div class="container">
+
+<p><h4>{{recetas.Receta}}</h4></p>
+
+{% if recetas %}
+
+    {% if recetas.Imagen %}
+    <p><img src="{{recetas.Imagen.url}}" alt="Imagen" height="400 px"></p>
+    {% endif %}
+    <p>Fecha de la publicacion: {{recetas.fechaPublicacion}}</p>
+    <p>Duracion: {{recetas.Duracion}} min</p>
+    <p>Usuario: {{ recetas.usuario}} </p>
+    <p>Receta: {{recetas.Receta}}</p>
+    <p>Ingredientes: {{recetas.Ingredientes}}</p>
+    <p>Descripcion: {{recetas.Descripcion}}</p>
+    <p>Pasos a paso: {{recetas.Pasos}}</p>
+
+
+
+{% endif %}
+</div>
+
+{% endblock %}

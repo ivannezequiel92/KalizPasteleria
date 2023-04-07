@@ -26,16 +26,18 @@
             <div class="container">
                 <a class="nav-link"  href="{% url 'AppKalizInicio' %}">Inicio</a>
 
-                       <a class="nav-link" href="{% url 'AppKalizAlfajores' %}">Alfajores</a>
-                        <a class="nav-link" href="{% url 'AppKalizTortas' %}">Tortas</a>
-                        <a class="nav-link" href="{% url 'AppKalizSandwiches' %}">Sandwiches</a>
+                       <a class="nav-link" href="{% url 'AppKalizRecetas' %}">Recetas saladas</a>
+                        <a class="nav-link" href="{% url 'AppKalizRecetasDulces' %}">Recetas dulces</a>
+                        <a class="nav-link" href="#">Nos ayudamos</a>
                         <a class="nav-link" href="#portfolio">About</a>
-                        <a class="nav-link" href="#contact">Contacto</a>
+
 
                         {% if user.is_authenticated %}
+                             <img src="{{ user.avatar.imagen.url }}" alt="usuario" height="40 px" />
                              <a class="nav-link">{{ user.username }}</a>
 
                              <a class="nav-link" href="{% url 'accountLogout' %}">Cerrar sesion</a>
+                             <a class="nav-link" href="{% url 'accountEditarUsuario' %}">Editar usuario</a>
 
                         {% else %}
 

@@ -1,0 +1,13 @@
+{%  extends "base.html" %}
+{% block contenido_cambia %}
+    {#form  method="POST" enctype="multipart/form-data">#}
+    {%  if recetas %}
+        {% for receta in recetas %}
+            <a class="text-black-50 mb-5" href="{% url 'AppKalizRecetaDulceDetalle' receta.id %}">Receta: {{ receta.Receta }}, Descripcion: {{ receta.Descripcion}}, Duracion: {{receta.Duracion }}</a><br>
+
+        {% endfor %}
+    {% else %}
+        <h3>No Tenemos esa receta</h3>
+    {% endif %}
+
+{% endblock %}
